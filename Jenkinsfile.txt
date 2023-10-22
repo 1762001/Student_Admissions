@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the GitHub repository
+                script {
+                    git url: 'https://github.com/your-username/your-repo.git'
+                }
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                // Add build and test commands here
+                sh 'npm install'
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add deployment commands here
+                sh 'npm run deploy'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline successfully executed. Deployment completed!'
+        }
+        failure {
+            echo 'Pipeline failed. Deployment did not occur.'
+        }
+    }
+}
